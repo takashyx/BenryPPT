@@ -50,6 +50,17 @@ namespace BenryPPT
             }
         }
 
+        private void convertShapeFont(Shape shape, string targetFont)
+        {
+            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
+            {
+                shape.TextFrame.TextRange.Font.Name = targetFont;
+                shape.TextFrame.TextRange.Font.NameFarEast = targetFont;
+                shape.TextFrame2.TextRange.Font.Name = targetFont;
+                shape.TextFrame2.TextRange.Font.NameFarEast = targetFont;
+            }
+        }
+        
         private void UnifyFont_ConvertFonts()
         {
 
@@ -64,55 +75,34 @@ namespace BenryPPT
                 {
                     foreach (Shape shape in slide.Shapes)
                     {
-                        // Shapes with texts
-                        if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
+                        if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
                         {
-                            shape.TextFrame.TextRange.Font.Name = targetFont;
-                            shape.TextFrame.TextRange.Font.NameFarEast = targetFont;
-                            shape.TextFrame2.TextRange.Font.Name = targetFont;
-                            shape.TextFrame2.TextRange.Font.NameFarEast = targetFont;
+                            foreach (Shape item in shape.GroupItems)
+                            {
+                                convertShapeFont(item, targetFont);
+                            }
                         }
+
+                        // Shapes with texts
+                        convertShapeFont(shape, targetFont);
 
                         // Tables
                         if (shape.HasTable == Microsoft.Office.Core.MsoTriState.msoTrue)
                         {
-                            Debug.WriteLine("Table found");
-                            
                             foreach(int i in  Enumerable.Range(1,shape.Table.Rows.Count))
                             {
                                 foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
                                 {
                                     Cell cell = shape.Table.Cell(i, j);
-                                    if (cell.Shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
-
-                                    {
-                                        Debug.WriteLine("shape_in_chart with text found");
-                                        cell.Shape.TextFrame.TextRange.Font.Name = targetFont;
-                                        cell.Shape.TextFrame.TextRange.Font.NameFarEast = targetFont;
-                                        cell.Shape.TextFrame2.TextRange.Font.Name = targetFont;
-                                        cell.Shape.TextFrame2.TextRange.Font.NameFarEast = targetFont;
-                                    }
+                                    convertShapeFont(cell.Shape, targetFont);
                                 }
                             }
                         }
                         // Charts
                         if (shape.HasChart == Microsoft.Office.Core.MsoTriState.msoTrue)
                         {
-                            Debug.WriteLine("Chart found");
                             if (shape.Chart.HasTitle)  shape.Chart.ChartTitle.Font.Name = targetFont; 
                             if (shape.Chart.HasLegend) shape.Chart.Legend.Font.Name = targetFont;
-
-                            foreach (Shape shape_in_chart in shape.Chart.Shapes)
-                            {
-                                if (shape_in_chart.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
-                                {
-                                    Debug.WriteLine("shape_in_chart with text found");
-                                    shape_in_chart.TextFrame.TextRange.Font.Name = targetFont;
-                                    shape_in_chart.TextFrame.TextRange.Font.NameFarEast = targetFont;
-                                    shape_in_chart.TextFrame2.TextRange.Font.Name = targetFont;
-                                    shape_in_chart.TextFrame2.TextRange.Font.NameFarEast = targetFont;
-                                }
-                            }
                         }
                     }
                 }

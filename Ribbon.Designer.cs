@@ -38,8 +38,8 @@
             this.group1 = this.Factory.CreateRibbonGroup();
             this.label_UnifyFontsTargetFont = this.Factory.CreateRibbonLabel();
             this.dropDown_UnifyFontsTargetFont = this.Factory.CreateRibbonDropDown();
-            this.UnifyFonts = this.Factory.CreateRibbonButton();
             this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.UnifyFonts = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +73,10 @@
             this.dropDown_UnifyFontsTargetFont.SizeString = "wwwwwwwwwwwwwwwwwwww";
             this.dropDown_UnifyFontsTargetFont.SelectionChanged += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.dropDown_UnifyFontsTargetFont_SelectionChanged);
             // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
+            // 
             // UnifyFonts
             // 
             this.UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -81,10 +85,6 @@
             this.UnifyFonts.OfficeImageId = "FontsReplaceFonts";
             this.UnifyFonts.ShowImage = true;
             this.UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
             // 
             // Ribbon
             // 
