@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Office.Interop.PowerPoint;
+using Microsoft.Office.Tools.Ribbon;
+using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Windows.Forms;
-using Microsoft.Office.Tools.Ribbon;
-using Microsoft.Office.Interop.PowerPoint;
-using System.Diagnostics;
-using System.Security.Cryptography;
 
 namespace BenryPPT
 {
@@ -42,7 +37,7 @@ namespace BenryPPT
                     targetIndex = dropDown_UnifyFontsTargetFont.Items.IndexOf(item);
                 }
             }
-            
+
             // set target font
             if (targetSettingsMatch)
             {
@@ -60,7 +55,7 @@ namespace BenryPPT
                 shape.TextFrame2.TextRange.Font.NameFarEast = targetFont;
             }
         }
-        
+
         private void UnifyFont_ConvertFonts()
         {
 
@@ -89,7 +84,7 @@ namespace BenryPPT
                         // Tables
                         if (shape.HasTable == Microsoft.Office.Core.MsoTriState.msoTrue)
                         {
-                            foreach(int i in  Enumerable.Range(1,shape.Table.Rows.Count))
+                            foreach (int i in Enumerable.Range(1, shape.Table.Rows.Count))
                             {
                                 foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
                                 {
@@ -101,13 +96,13 @@ namespace BenryPPT
                         // Charts
                         if (shape.HasChart == Microsoft.Office.Core.MsoTriState.msoTrue)
                         {
-                            if (shape.Chart.HasTitle)  shape.Chart.ChartTitle.Font.Name = targetFont; 
+                            if (shape.Chart.HasTitle) shape.Chart.ChartTitle.Font.Name = targetFont;
                             if (shape.Chart.HasLegend) shape.Chart.Legend.Font.Name = targetFont;
                         }
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show("Benry Error: " + ex);
             }

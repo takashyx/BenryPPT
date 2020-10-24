@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Core;
+﻿using Office = Microsoft.Office.Core;
 
 namespace BenryPPT
 {
     public partial class ThisAddIn
     {
         public Microsoft.Office.Tools.CustomTaskPane benryPane;
- 
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             // create pane
-            benryPane = this.CustomTaskPanes.Add(new BenryControl(), "BenryControl"); 
+            benryPane = this.CustomTaskPanes.Add(new BenryControl(), "BenryControl");
         }
 
         public void ShowPanel()
@@ -40,7 +33,7 @@ namespace BenryPPT
             this.Startup += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
         }
-        
+
         #endregion
     }
 }
