@@ -2,9 +2,9 @@
 
 namespace BenryPPT
 {
-    public partial class BenryControl : UserControl
+    public partial class RibbonControl : UserControl
     {
-        public BenryControl()
+        public RibbonControl()
         {
             InitializeComponent();
         }

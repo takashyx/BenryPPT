@@ -30,10 +30,10 @@
     <DefineConstants>VSTO40</DefineConstants>
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>C:\Users\takas\Dropbox\configure\benryPPT\</PublishUrl>
+    <PublishUrl>C:\Users\takas\Dropbox\configure\BenryPPT\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ja</TargetCulture>
-    <ApplicationVersion>1.1.0.1</ApplicationVersion>
+    <ApplicationVersion>1.1.1.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>7</UpdateInterval>
@@ -176,15 +176,24 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="BenryControl.cs">
+    <Compile Include="RibbonControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BenryControl.Designer.cs">
-      <DependentUpon>BenryControl.cs</DependentUpon>
+    <Compile Include="RibbonControl.Designer.cs">
+      <DependentUpon>RibbonControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProgress.Designer.cs">
+      <DependentUpon>FormProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="FormProgress.resx">
+      <DependentUpon>FormProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

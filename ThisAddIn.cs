@@ -9,7 +9,7 @@ namespace BenryPPT
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             // create pane
-            benryPane = this.CustomTaskPanes.Add(new BenryControl(), "BenryControl");
+            benryPane = this.CustomTaskPanes.Add(new RibbonControl(), "BenryControl");
         }
 
         public void ShowPanel()

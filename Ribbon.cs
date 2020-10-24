@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BenryPPT
 {
@@ -56,7 +57,7 @@ namespace BenryPPT
             }
         }
 
-        private void UnifyFont_ConvertFonts()
+        private void UnifyFont_ConvertFonts(FormProgress pr)
         {
 
             string targetFont = Settings.Default.targetFontForUnifyFonts;
@@ -65,9 +66,14 @@ namespace BenryPPT
             {
                 // convert slide items
                 var slides = Globals.ThisAddIn.Application.ActivePresentation.Slides;
+                int slide_count_all = slides.Count;
+                int slide_count_processed = 0;
 
                 foreach (Slide slide in slides)
                 {
+                    pr.setProgressBarMessage("作業中: "+(slide_count_processed + 1)+"枚目 / "+slide_count_all+"枚中");
+                    pr.setProgressBarPercentage(100 * slide_count_processed / slide_count_all);
+
                     foreach (Shape shape in slide.Shapes)
                     {
                         if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
@@ -100,6 +106,8 @@ namespace BenryPPT
                             if (shape.Chart.HasLegend) shape.Chart.Legend.Font.Name = targetFont;
                         }
                     }
+                    slide_count_processed += 1;
+
                 }
             }
             catch (Exception ex)
@@ -111,11 +119,23 @@ namespace BenryPPT
 
         private void UnifyFont_Click(object sender, RibbonControlEventArgs e)
         {
+            this.RibbonButton_UnifyFonts.Enabled = false;
+            this.dropDown_UnifyFontsTargetFont.Enabled = false;
             // read target font
             string FontFamilyName = Settings.Default.targetFontForUnifyFonts;
 
+            var progress = new FormProgress();
+
+            progress.setFormTitle("フォントを統一しています");
+            progress.Show();
+
             // splash screen
-            UnifyFont_ConvertFonts();
+            UnifyFont_ConvertFonts(progress);
+
+            progress.exitForm();
+
+            this.dropDown_UnifyFontsTargetFont.Enabled = true;
+            this.RibbonButton_UnifyFonts.Enabled = true;
         }
 
         private void dropDown_UnifyFontsTargetFont_SelectionChanged(object sender, RibbonControlEventArgs e)

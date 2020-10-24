@@ -39,7 +39,7 @@
             this.label_UnifyFontsTargetFont = this.Factory.CreateRibbonLabel();
             this.dropDown_UnifyFontsTargetFont = this.Factory.CreateRibbonDropDown();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.UnifyFonts = this.Factory.CreateRibbonButton();
+            this.RibbonButton_UnifyFonts = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +56,7 @@
             this.group1.Items.Add(this.label_UnifyFontsTargetFont);
             this.group1.Items.Add(this.dropDown_UnifyFontsTargetFont);
             this.group1.Items.Add(this.separator1);
-            this.group1.Items.Add(this.UnifyFonts);
+            this.group1.Items.Add(this.RibbonButton_UnifyFonts);
             this.group1.Label = "全ページのフォント統一";
             this.group1.Name = "group1";
             // 
@@ -77,14 +77,14 @@
             // 
             this.separator1.Name = "separator1";
             // 
-            // UnifyFonts
+            // RibbonButton_UnifyFonts
             // 
-            this.UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.UnifyFonts.Label = "統一開始";
-            this.UnifyFonts.Name = "UnifyFonts";
-            this.UnifyFonts.OfficeImageId = "FontsReplaceFonts";
-            this.UnifyFonts.ShowImage = true;
-            this.UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
+            this.RibbonButton_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.RibbonButton_UnifyFonts.Label = "統一開始";
+            this.RibbonButton_UnifyFonts.Name = "RibbonButton_UnifyFonts";
+            this.RibbonButton_UnifyFonts.OfficeImageId = "FontsReplaceFonts";
+            this.RibbonButton_UnifyFonts.ShowImage = true;
+            this.RibbonButton_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
             // 
             // Ribbon
             // 
@@ -104,7 +104,7 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab_Benry;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton UnifyFonts;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton RibbonButton_UnifyFonts;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dropDown_UnifyFontsTargetFont;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label_UnifyFontsTargetFont;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;

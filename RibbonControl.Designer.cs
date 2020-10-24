@@ -1,6 +1,6 @@
 ﻿namespace BenryPPT
 {
-    partial class BenryControl
+    partial class RibbonControl
     {
         /// <summary> 
         /// 必要なデザイナー変数です。
