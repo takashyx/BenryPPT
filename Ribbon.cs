@@ -14,9 +14,12 @@ namespace BenryPPT
 
         private void Ribbon_Load(object sender, RibbonUIEventArgs e)
         {
-            bool targetSettingsMatch = false;
-            int targetIndex = 0;
+            bool targetFontMatch = false;
+            bool targetFontFarEastMatch = false;
+            int targetFontIndex = 0;
+            int targetFontFarEastIndex = 0;
             string targetFont = Settings.Default.targetFontForUnifyFonts.ToString();
+            string targetFontFarEast = Settings.Default.targetFontFarEastForUnifyFonts.ToString();
 
             // set fontfamily to dropdown
             InstalledFontCollection fonts = new InstalledFontCollection();
@@ -25,6 +28,7 @@ namespace BenryPPT
 
             RibbonDropDownItem item;
             dropDown_UnifyFontsTargetFont.Items.Clear();
+            dropDown_UnifyFontsTargetFontFarEast.Items.Clear();
 
             foreach (FontFamily ff in ffArray)
             {
@@ -32,28 +36,35 @@ namespace BenryPPT
                 item.Label = ff.Name;
                 dropDown_UnifyFontsTargetFont.Items.Add(item);
 
+                item = Factory.CreateRibbonDropDownItem();
+                item.Label = ff.Name;
+                dropDown_UnifyFontsTargetFontFarEast.Items.Add(item);
+
                 if (targetFont.Equals(item.Label.ToString()))
                 {
-                    targetSettingsMatch = true;
-                    targetIndex = dropDown_UnifyFontsTargetFont.Items.IndexOf(item);
+                    targetFontMatch = true;
+                    targetFontIndex = dropDown_UnifyFontsTargetFont.Items.IndexOf(item);
+                }
+                if (targetFontFarEast.Equals(item.Label.ToString()))
+                {
+                    targetFontFarEastMatch = true;
+                    targetFontFarEastIndex = dropDown_UnifyFontsTargetFontFarEast.Items.IndexOf(item);
                 }
             }
 
             // set target font
-            if (targetSettingsMatch)
-            {
-                dropDown_UnifyFontsTargetFont.SelectedItemIndex = targetIndex;
-            }
+            if (targetFontMatch) dropDown_UnifyFontsTargetFont.SelectedItemIndex = targetFontIndex;
+            if (targetFontFarEastMatch) dropDown_UnifyFontsTargetFontFarEast.SelectedItemIndex = targetFontFarEastIndex;
         }
 
-        private void convertShapeFont(Shape shape, string targetFont)
+        private void convertShapeFont(Shape shape, string targetFont, string targetFontFarEast)
         {
             if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
             {
                 shape.TextFrame.TextRange.Font.Name = targetFont;
-                shape.TextFrame.TextRange.Font.NameFarEast = targetFont;
+                shape.TextFrame.TextRange.Font.NameFarEast = targetFontFarEast;
                 shape.TextFrame2.TextRange.Font.Name = targetFont;
-                shape.TextFrame2.TextRange.Font.NameFarEast = targetFont;
+                shape.TextFrame2.TextRange.Font.NameFarEast = targetFontFarEast;
             }
         }
 
@@ -61,6 +72,7 @@ namespace BenryPPT
         {
 
             string targetFont = Settings.Default.targetFontForUnifyFonts;
+            string targetFontFarEast = Settings.Default.targetFontFarEastForUnifyFonts;
 
             try
             {
@@ -72,20 +84,21 @@ namespace BenryPPT
                 foreach (Slide slide in slides)
                 {
                     pr.setProgressBarMessage("作業中: "+(slide_count_processed + 1)+"枚目 / "+slide_count_all+"枚中");
-                    pr.setProgressBarPercentage(100 * slide_count_processed / slide_count_all);
+                    pr.setProgressBarPercentage((100 * slide_count_processed) / slide_count_all);
 
                     foreach (Shape shape in slide.Shapes)
                     {
+                        // Grouped Shape and Smart Art
                         if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
                         {
                             foreach (Shape item in shape.GroupItems)
                             {
-                                convertShapeFont(item, targetFont);
+                                convertShapeFont(item, targetFont, targetFontFarEast);
                             }
                         }
 
                         // Shapes with texts
-                        convertShapeFont(shape, targetFont);
+                        convertShapeFont(shape, targetFont, targetFontFarEast);
 
                         // Tables
                         if (shape.HasTable == Microsoft.Office.Core.MsoTriState.msoTrue)
@@ -95,14 +108,17 @@ namespace BenryPPT
                                 foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
                                 {
                                     Cell cell = shape.Table.Cell(i, j);
-                                    convertShapeFont(cell.Shape, targetFont);
+                                    convertShapeFont(cell.Shape, targetFont, targetFontFarEast);
                                 }
                             }
                         }
                         // Charts
                         if (shape.HasChart == Microsoft.Office.Core.MsoTriState.msoTrue)
                         {
+                            // workaround
+                            if (shape.Chart.HasTitle) shape.Chart.ChartTitle.Font.Name = targetFontFarEast;
                             if (shape.Chart.HasTitle) shape.Chart.ChartTitle.Font.Name = targetFont;
+                            if (shape.Chart.HasLegend) shape.Chart.Legend.Font.Name = targetFontFarEast;
                             if (shape.Chart.HasLegend) shape.Chart.Legend.Font.Name = targetFont;
                         }
                     }
@@ -112,35 +128,43 @@ namespace BenryPPT
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("Benry Error: " + ex);
+                System.Windows.Forms.MessageBox.Show("Benry Error: \n" + ex);
             }
             Debug.WriteLine("Converting Done.");
         }
 
         private void UnifyFont_Click(object sender, RibbonControlEventArgs e)
         {
+            // Disable controls
             this.RibbonButton_UnifyFonts.Enabled = false;
             this.dropDown_UnifyFontsTargetFont.Enabled = false;
-            // read target font
-            string FontFamilyName = Settings.Default.targetFontForUnifyFonts;
+            this.dropDown_UnifyFontsTargetFontFarEast.Enabled = false;
 
+            // show progress bar and convert
             var progress = new FormProgress();
 
             progress.setFormTitle("フォントを統一しています");
             progress.Show();
 
-            // splash screen
             UnifyFont_ConvertFonts(progress);
 
             progress.exitForm();
 
+            // Enable controls
             this.dropDown_UnifyFontsTargetFont.Enabled = true;
+            this.dropDown_UnifyFontsTargetFontFarEast.Enabled = true;
             this.RibbonButton_UnifyFonts.Enabled = true;
         }
 
         private void dropDown_UnifyFontsTargetFont_SelectionChanged(object sender, RibbonControlEventArgs e)
         {
             Settings.Default.targetFontForUnifyFonts = dropDown_UnifyFontsTargetFont.SelectedItem.ToString();
+            Settings.Default.Save();
+        }
+
+        private void dropDown_UnifyFontsTargetFontFarEast_SelectionChanged(object sender, RibbonControlEventArgs e)
+        {
+            Settings.Default.targetFontFarEastForUnifyFonts = dropDown_UnifyFontsTargetFontFarEast.SelectedItem.ToString();
             Settings.Default.Save();
         }
     }

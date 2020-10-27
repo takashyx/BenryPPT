@@ -34,5 +34,17 @@ namespace BenryPPT {
                 this["targetFontForUnifyFonts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string targetFontFarEastForUnifyFonts {
+            get {
+                return ((string)(this["targetFontFarEastForUnifyFonts"]));
+            }
+            set {
+                this["targetFontFarEastForUnifyFonts"] = value;
+            }
+        }
     }
 }
