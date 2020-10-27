@@ -33,14 +33,14 @@
     <PublishUrl>C:\Users\takas\Dropbox\configure\BenryPPT\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ja</TargetCulture>
-    <ApplicationVersion>1.1.1.2</ApplicationVersion>
+    <ApplicationVersion>1.2.0.1</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateInterval>7</UpdateInterval>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <ProductName>BenryPPT</ProductName>
-    <PublisherName />
-    <SupportUrl />
+    <PublisherName>takashyx</PublisherName>
+    <SupportUrl>https://github.com/takashyx/BenryPPT/</SupportUrl>
     <FriendlyName>BenryPPT</FriendlyName>
     <OfficeApplicationDescription />
     <LoadBehavior>3</LoadBehavior>
