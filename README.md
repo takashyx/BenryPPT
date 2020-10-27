@@ -18,7 +18,9 @@ Windows 10 Pro 64bitの Office 365で動作確認しています。
 - https://github.com/takashyx/BenryPPT/releases の最新バージョンから、Assetsの項目内にあるzipファイルをダウンロードしてください。
 - ダウンロードしたファイルを解凍します。
 - BenryPPT.vsto ファイルと、Application Files/BenryPPT_X_X_X_X/BenryPPT.dll.manifest　ファイルについて、セキュリティロックを解除します。手順はファイルを右クリック→「プロパティ」開いたウィンドウ「全般」タブの一番下のところで、セキュリティブロックを解除して下さい（「ブロックの解除」というボタン、または「許可」というチェックボックスになります）
-  - ※この手順が必要な理由はWindowsのダウンロードファイルに対するセキュリティ機能です 参考：https://artfulplace.hatenablog.com/entry/2014/05/26/154251
+  - ※この手順が必要な理由はWindowsのダウンロードファイルに対するセキュリティ機能です
+    
+    参考：https://artfulplace.hatenablog.com/entry/2014/05/26/154251
 
 - Setup.exeがありますので実行してください。
 - PowerPointを開くと、【Benry】というタブが増えていると思います。
