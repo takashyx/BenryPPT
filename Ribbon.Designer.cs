@@ -42,15 +42,25 @@
             this.label_fontFarEast = this.Factory.CreateRibbonLabel();
             this.dropDown_UnifyFontsTargetFontFarEast = this.Factory.CreateRibbonDropDown();
             this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.group_hankaku = this.Factory.CreateRibbonGroup();
             this.RibbonButton_UnifyFonts = this.Factory.CreateRibbonButton();
+            this.button_zenkakuToHankaku = this.Factory.CreateRibbonButton();
+            this.group_multiple = this.Factory.CreateRibbonGroup();
+            this.checkBox_unifyFonts = this.Factory.CreateRibbonCheckBox();
+            this.checkBox_zenkakuToHankaku = this.Factory.CreateRibbonCheckBox();
+            this.button_multiple = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
+            this.group_hankaku.SuspendLayout();
+            this.group_multiple.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab_Benry
             // 
             this.tab_Benry.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab_Benry.Groups.Add(this.group1);
+            this.tab_Benry.Groups.Add(this.group_hankaku);
+            this.tab_Benry.Groups.Add(this.group_multiple);
             this.tab_Benry.Label = "【Benry】";
             this.tab_Benry.Name = "tab_Benry";
             // 
@@ -100,6 +110,12 @@
             // 
             this.separator1.Name = "separator1";
             // 
+            // group_hankaku
+            // 
+            this.group_hankaku.Items.Add(this.button_zenkakuToHankaku);
+            this.group_hankaku.Label = "全ページの全角英数字を半角化";
+            this.group_hankaku.Name = "group_hankaku";
+            // 
             // RibbonButton_UnifyFonts
             // 
             this.RibbonButton_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -108,6 +124,40 @@
             this.RibbonButton_UnifyFonts.OfficeImageId = "FontsReplaceFonts";
             this.RibbonButton_UnifyFonts.ShowImage = true;
             this.RibbonButton_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
+            // 
+            // button_zenkakuToHankaku
+            // 
+            this.button_zenkakuToHankaku.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_zenkakuToHankaku.Label = "統一開始";
+            this.button_zenkakuToHankaku.Name = "button_zenkakuToHankaku";
+            this.button_zenkakuToHankaku.OfficeImageId = "AsianLayoutMenu";
+            this.button_zenkakuToHankaku.ShowImage = true;
+            // 
+            // group_multiple
+            // 
+            this.group_multiple.Items.Add(this.checkBox_unifyFonts);
+            this.group_multiple.Items.Add(this.checkBox_zenkakuToHankaku);
+            this.group_multiple.Items.Add(this.button_multiple);
+            this.group_multiple.Label = "全ページに複数の処理をまとめて実行";
+            this.group_multiple.Name = "group_multiple";
+            // 
+            // checkBox_unifyFonts
+            // 
+            this.checkBox_unifyFonts.Label = "フォント統一";
+            this.checkBox_unifyFonts.Name = "checkBox_unifyFonts";
+            // 
+            // checkBox_zenkakuToHankaku
+            // 
+            this.checkBox_zenkakuToHankaku.Label = "全角英数字を半角化";
+            this.checkBox_zenkakuToHankaku.Name = "checkBox_zenkakuToHankaku";
+            // 
+            // button_multiple
+            // 
+            this.button_multiple.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_multiple.Label = "まとめて開始";
+            this.button_multiple.Name = "button_multiple";
+            this.button_multiple.OfficeImageId = "WorkTrackingForm";
+            this.button_multiple.ShowImage = true;
             // 
             // Ribbon
             // 
@@ -119,6 +169,10 @@
             this.tab_Benry.PerformLayout();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
+            this.group_hankaku.ResumeLayout(false);
+            this.group_hankaku.PerformLayout();
+            this.group_multiple.ResumeLayout(false);
+            this.group_multiple.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -134,6 +188,12 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label_fontFarEast;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dropDown_UnifyFontsTargetFontFarEast;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_hankaku;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_zenkakuToHankaku;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_multiple;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox_unifyFonts;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox_zenkakuToHankaku;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_multiple;
     }
 
     partial class ThisRibbonCollection
