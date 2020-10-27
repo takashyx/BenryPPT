@@ -20,13 +20,17 @@ namespace BenryPPT
             bool targetFontFarEastMatch = false;
             int targetFontIndex = 0;
             int targetFontFarEastIndex = 0;
+
             string targetFont = Settings.Default.targetFontForUnifyFonts.ToString();
             string targetFontFarEast = Settings.Default.targetFontFarEastForUnifyFonts.ToString();
+
+            // set multiple do settings
+            this.checkBox_unifyFonts.Checked = Settings.Default.multipleDoFontUnify;
+            this.checkBox_zenkakuToHankaku.Checked = Settings.Default.multipleDoZenkakuToHankaku;
 
             // set fontfamily to dropdown
             InstalledFontCollection fonts = new InstalledFontCollection();
             FontFamily[] ffArray = fonts.Families;
-
 
             RibbonDropDownItem item;
             dropDown_UnifyFontsTargetFont.Items.Clear();
@@ -267,6 +271,24 @@ namespace BenryPPT
 
             // Enable controls
             this.button_zenkakuToHankaku.Enabled = true;
+        }
+
+        private void checkBox_unifyFonts_Click(object sender, RibbonControlEventArgs e)
+        {
+            Settings.Default.multipleDoFontUnify = this.checkBox_unifyFonts.Checked;
+            Settings.Default.Save();
+        }
+
+        private void checkBox_zenkakuToHankaku_Click(object sender, RibbonControlEventArgs e)
+        {
+            Settings.Default.multipleDoZenkakuToHankaku = this.checkBox_zenkakuToHankaku.Checked;
+            Settings.Default.Save();
+        }
+
+        private void button_multiple_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (this.checkBox_unifyFonts.Checked) UnifyFont_Click(sender, e);
+            if (this.checkBox_zenkakuToHankaku.Checked) button_zenkakuToHankaku_Click(sender, e);
         }
     }
 }

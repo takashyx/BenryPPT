@@ -146,11 +146,13 @@
             // 
             this.checkBox_unifyFonts.Label = "フォント統一";
             this.checkBox_unifyFonts.Name = "checkBox_unifyFonts";
+            this.checkBox_unifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox_unifyFonts_Click);
             // 
             // checkBox_zenkakuToHankaku
             // 
             this.checkBox_zenkakuToHankaku.Label = "全角英数字を半角化";
             this.checkBox_zenkakuToHankaku.Name = "checkBox_zenkakuToHankaku";
+            this.checkBox_zenkakuToHankaku.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox_zenkakuToHankaku_Click);
             // 
             // button_multiple
             // 
@@ -159,6 +161,7 @@
             this.button_multiple.Name = "button_multiple";
             this.button_multiple.OfficeImageId = "WorkTrackingForm";
             this.button_multiple.ShowImage = true;
+            this.button_multiple.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_multiple_Click);
             // 
             // Ribbon
             // 

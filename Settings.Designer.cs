@@ -46,5 +46,29 @@ namespace BenryPPT {
                 this["targetFontFarEastForUnifyFonts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool multipleDoFontUnify {
+            get {
+                return ((bool)(this["multipleDoFontUnify"]));
+            }
+            set {
+                this["multipleDoFontUnify"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool multipleDoZenkakuToHankaku {
+            get {
+                return ((bool)(this["multipleDoZenkakuToHankaku"]));
+            }
+            set {
+                this["multipleDoZenkakuToHankaku"] = value;
+            }
+        }
     }
 }
