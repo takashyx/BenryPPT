@@ -43,7 +43,7 @@
             this.dropDown_UnifyFontsTargetFontFarEast = this.Factory.CreateRibbonDropDown();
             this.separator1 = this.Factory.CreateRibbonSeparator();
             this.group_hankaku = this.Factory.CreateRibbonGroup();
-            this.RibbonButton_UnifyFonts = this.Factory.CreateRibbonButton();
+            this.button_UnifyFonts = this.Factory.CreateRibbonButton();
             this.button_zenkakuToHankaku = this.Factory.CreateRibbonButton();
             this.group_multiple = this.Factory.CreateRibbonGroup();
             this.checkBox_unifyFonts = this.Factory.CreateRibbonCheckBox();
@@ -72,7 +72,7 @@
             this.group1.Items.Add(this.label_fontFarEast);
             this.group1.Items.Add(this.dropDown_UnifyFontsTargetFontFarEast);
             this.group1.Items.Add(this.separator1);
-            this.group1.Items.Add(this.RibbonButton_UnifyFonts);
+            this.group1.Items.Add(this.button_UnifyFonts);
             this.group1.Label = "全ページのフォント統一";
             this.group1.Name = "group1";
             // 
@@ -116,14 +116,14 @@
             this.group_hankaku.Label = "全ページの全角英数字を半角化";
             this.group_hankaku.Name = "group_hankaku";
             // 
-            // RibbonButton_UnifyFonts
+            // button_UnifyFonts
             // 
-            this.RibbonButton_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.RibbonButton_UnifyFonts.Label = "統一開始";
-            this.RibbonButton_UnifyFonts.Name = "RibbonButton_UnifyFonts";
-            this.RibbonButton_UnifyFonts.OfficeImageId = "FontsReplaceFonts";
-            this.RibbonButton_UnifyFonts.ShowImage = true;
-            this.RibbonButton_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
+            this.button_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_UnifyFonts.Label = "統一開始";
+            this.button_UnifyFonts.Name = "button_UnifyFonts";
+            this.button_UnifyFonts.OfficeImageId = "FontsReplaceFonts";
+            this.button_UnifyFonts.ShowImage = true;
+            this.button_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
             // 
             // button_zenkakuToHankaku
             // 
@@ -132,6 +132,7 @@
             this.button_zenkakuToHankaku.Name = "button_zenkakuToHankaku";
             this.button_zenkakuToHankaku.OfficeImageId = "AsianLayoutMenu";
             this.button_zenkakuToHankaku.ShowImage = true;
+            this.button_zenkakuToHankaku.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_zenkakuToHankaku_Click);
             // 
             // group_multiple
             // 
@@ -181,7 +182,7 @@
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab_Benry;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton RibbonButton_UnifyFonts;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_UnifyFonts;
         internal Microsoft.Office.Tools.Ribbon.RibbonDropDown dropDown_UnifyFontsTargetFont;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label_font;

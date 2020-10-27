@@ -1,10 +1,12 @@
 ﻿using Microsoft.Office.Interop.PowerPoint;
 using Microsoft.Office.Tools.Ribbon;
+using Microsoft.VisualBasic;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace BenryPPT
@@ -136,7 +138,7 @@ namespace BenryPPT
         private void UnifyFont_Click(object sender, RibbonControlEventArgs e)
         {
             // Disable controls
-            this.RibbonButton_UnifyFonts.Enabled = false;
+            this.button_UnifyFonts.Enabled = false;
             this.dropDown_UnifyFontsTargetFont.Enabled = false;
             this.dropDown_UnifyFontsTargetFontFarEast.Enabled = false;
 
@@ -153,7 +155,7 @@ namespace BenryPPT
             // Enable controls
             this.dropDown_UnifyFontsTargetFont.Enabled = true;
             this.dropDown_UnifyFontsTargetFontFarEast.Enabled = true;
-            this.RibbonButton_UnifyFonts.Enabled = true;
+            this.button_UnifyFonts.Enabled = true;
         }
 
         private void dropDown_UnifyFontsTargetFont_SelectionChanged(object sender, RibbonControlEventArgs e)
@@ -166,6 +168,105 @@ namespace BenryPPT
         {
             Settings.Default.targetFontFarEastForUnifyFonts = dropDown_UnifyFontsTargetFontFarEast.SelectedItem.ToString();
             Settings.Default.Save();
+        }
+
+        private static string abc123ToHankaku(string s)
+        {
+            Regex re = new Regex("[０-９Ａ-Ｚａ-ｚ：－　]+");
+            string output = re.Replace(s, myReplacer);
+
+            return output;
+        }
+
+        private static string myReplacer(Match m)
+        {
+            return Strings.StrConv(m.Value, VbStrConv.Narrow, 0);
+        }
+
+        private void convert_shape_zenkakuToHankaku(Shape shape)
+        {
+            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue) shape.TextFrame.TextRange.Text = abc123ToHankaku(shape.TextFrame.TextRange.Text); 
+        }
+
+        private void convertZenkakuToHankaku(FormProgress pr)
+        {
+            try
+            {
+                // convert slide items
+                var slides = Globals.ThisAddIn.Application.ActivePresentation.Slides;
+                int slide_count_all = slides.Count;
+                int slide_count_processed = 0;
+
+                foreach (Slide slide in slides)
+                {
+                    pr.setProgressBarMessage("作業中: "+(slide_count_processed + 1)+"枚目 / "+slide_count_all+"枚中");
+                    pr.setProgressBarPercentage((100 * slide_count_processed) / slide_count_all);
+
+                    foreach (Shape shape in slide.Shapes)
+                    {
+                        // Grouped Shape and Smart Art
+                        if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
+                        {
+                            foreach (Shape item in shape.GroupItems)
+                            {
+                                convert_shape_zenkakuToHankaku(item);
+                            }
+                        }
+
+                        // Tables
+                        if (shape.HasTable == Microsoft.Office.Core.MsoTriState.msoTrue)
+                        {
+                            foreach (int i in Enumerable.Range(1, shape.Table.Rows.Count))
+                            {
+                                foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
+                                {
+                                    Cell cell = shape.Table.Cell(i, j);
+                                    convert_shape_zenkakuToHankaku(cell.Shape);
+                                }
+                            }
+                        }
+
+                        // Charts
+                        if (shape.HasChart == Microsoft.Office.Core.MsoTriState.msoTrue)
+                        {
+                            if (shape.Chart.HasTitle) shape.Chart.ChartTitle.Text = abc123ToHankaku(shape.Chart.ChartTitle.Text);
+                        }
+
+                        // Shapes with texts
+                        else
+                        { 
+                            convert_shape_zenkakuToHankaku(shape);
+                        }
+
+                    }
+                    slide_count_processed += 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Benry Error: \n" + ex);
+            }
+            Debug.WriteLine("Converting Done.");
+        }
+
+        private void button_zenkakuToHankaku_Click(object sender, RibbonControlEventArgs e)
+        {
+            // Disable controls
+            this.button_zenkakuToHankaku.Enabled = false;
+
+            // show progress bar and convert
+            var progress = new FormProgress();
+
+            progress.setFormTitle("全角の英字・数字を半角に変換中");
+            progress.Show();
+
+            convertZenkakuToHankaku(progress);
+
+            progress.exitForm();
+
+            // Enable controls
+            this.button_zenkakuToHankaku.Enabled = true;
         }
     }
 }
