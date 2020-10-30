@@ -42,15 +42,16 @@ namespace BenryPPT
                 item.Label = ff.Name;
                 dropDown_UnifyFontsTargetFont.Items.Add(item);
 
-                item = Factory.CreateRibbonDropDownItem();
-                item.Label = ff.Name;
-                dropDown_UnifyFontsTargetFontFarEast.Items.Add(item);
-
                 if (targetFont.Equals(item.Label.ToString()))
                 {
                     targetFontMatch = true;
                     targetFontIndex = dropDown_UnifyFontsTargetFont.Items.IndexOf(item);
                 }
+
+                item = Factory.CreateRibbonDropDownItem();
+                item.Label = ff.Name;
+                dropDown_UnifyFontsTargetFontFarEast.Items.Add(item);
+
                 if (targetFontFarEast.Equals(item.Label.ToString()))
                 {
                     targetFontFarEastMatch = true;
