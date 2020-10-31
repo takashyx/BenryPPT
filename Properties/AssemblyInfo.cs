@@ -30,7 +30,12 @@ using System.Runtime.InteropServices;
 //
 // すべての値を指定するか、以下のように '*' を使ってビルドおよびリビジョン番号を
 // 既定値にすることができます:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.1.*")]
-[assembly: AssemblyFileVersion("1.3.1.*")]
+// デフォルトではAssemblyVersionとAssemblyFileVersionがあるのですが、なぜか両方あると*が効きませんよね。
+// AssemblyFileVersionを指定しなければ自動的なリビジョンが振られます。
+// ただし、これだとファイルのプロパティから確認するときに製品バージョンにも同じ値が入ってしまいます。
+// やはり製品バージョンは手動で値を振りたい。
+// 製品バージョンはAssemblyInformationalVersionを使うと振れます。
 
+[assembly: AssemblyVersion("1.4.0.*")]
+// [assembly: AssemblyFileVersion("1.3.1.*")]
+[assembly: AssemblyInformationalVersion("1.4.0")]

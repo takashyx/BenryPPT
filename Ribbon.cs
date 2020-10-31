@@ -1,13 +1,15 @@
-﻿using Microsoft.Office.Interop.PowerPoint;
-using Microsoft.Office.Tools.Ribbon;
+﻿using Microsoft.Office.Tools.Ribbon;
 using Microsoft.VisualBasic;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
+using PowerPoint = Microsoft.Office.Interop.PowerPoint;
+using Office = Microsoft.Office;
+using System.Reflection;
 
 namespace BenryPPT
 {
@@ -24,9 +26,13 @@ namespace BenryPPT
             string targetFont = Settings.Default.targetFontForUnifyFonts.ToString();
             string targetFontFarEast = Settings.Default.targetFontFarEastForUnifyFonts.ToString();
 
-            // set multiple do settings
+            // set multiple do checkboxes
             this.checkBox_unifyFonts.Checked = Settings.Default.multipleDoFontUnify;
             this.checkBox_zenkakuToHankaku.Checked = Settings.Default.multipleDoZenkakuToHankaku;
+
+            // set height/width also checkboxes
+            this.checkBox_heightAlso.Checked = Settings.Default.alignHeightAlso;
+            this.checkBox_widthAlso.Checked = Settings.Default.alignWidthAlso;
 
             // set fontfamily to dropdown
             InstalledFontCollection fonts = new InstalledFontCollection();
@@ -62,11 +68,16 @@ namespace BenryPPT
             // set target font
             if (targetFontMatch) dropDown_UnifyFontsTargetFont.SelectedItemIndex = targetFontIndex;
             if (targetFontFarEastMatch) dropDown_UnifyFontsTargetFontFarEast.SelectedItemIndex = targetFontFarEastIndex;
+            
+            // show version info
+            FileVersionInfo ver = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+            this.label_ProductVersion.Label =       "ver:   "+ver.ProductVersion;
+            this.label_assemblyFileversion.Label =  "build: "+ ver.FileVersion;
         }
 
-        private void convertShapeFont(Shape shape, string targetFont, string targetFontFarEast)
+        private void convertShapeFont(PowerPoint.Shape shape, string targetFont, string targetFontFarEast)
         {
-            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
+            if (shape.HasTextFrame == Office.Core.MsoTriState.msoTrue)
             {
                 shape.TextFrame.TextRange.Font.Name = targetFont;
                 shape.TextFrame.TextRange.Font.NameFarEast = targetFontFarEast;
@@ -88,17 +99,17 @@ namespace BenryPPT
                 int slide_count_all = slides.Count;
                 int slide_count_processed = 0;
 
-                foreach (Slide slide in slides)
+                foreach (PowerPoint.Slide slide in slides)
                 {
-                    pr.setProgressBarMessage("作業中: "+(slide_count_processed + 1)+"枚目 / "+slide_count_all+"枚中");
+                    pr.setProgressBarMessage("作業中: " + (slide_count_processed + 1) + "枚目 / " + slide_count_all + "枚中");
                     pr.setProgressBarPercentage((100 * slide_count_processed) / slide_count_all);
 
-                    foreach (Shape shape in slide.Shapes)
+                    foreach (PowerPoint.Shape shape in slide.Shapes)
                     {
                         // Grouped Shape and Smart Art
                         if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
                         {
-                            foreach (Shape item in shape.GroupItems)
+                            foreach (PowerPoint.Shape item in shape.GroupItems)
                             {
                                 convertShapeFont(item, targetFont, targetFontFarEast);
                             }
@@ -114,7 +125,7 @@ namespace BenryPPT
                             {
                                 foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
                                 {
-                                    Cell cell = shape.Table.Cell(i, j);
+                                    PowerPoint.Cell cell = shape.Table.Cell(i, j);
                                     convertShapeFont(cell.Shape, targetFont, targetFontFarEast);
                                 }
                             }
@@ -188,9 +199,9 @@ namespace BenryPPT
             return Strings.StrConv(m.Value, VbStrConv.Narrow, 0);
         }
 
-        private void convert_shape_zenkakuToHankaku(Shape shape)
+        private void convert_shape_zenkakuToHankaku(PowerPoint.Shape shape)
         {
-            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue) shape.TextFrame.TextRange.Text = abc123ToHankaku(shape.TextFrame.TextRange.Text); 
+            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue) shape.TextFrame.TextRange.Text = abc123ToHankaku(shape.TextFrame.TextRange.Text);
         }
 
         private void convertZenkakuToHankaku(FormProgress pr)
@@ -202,17 +213,17 @@ namespace BenryPPT
                 int slide_count_all = slides.Count;
                 int slide_count_processed = 0;
 
-                foreach (Slide slide in slides)
+                foreach (PowerPoint.Slide slide in slides)
                 {
-                    pr.setProgressBarMessage("作業中: "+(slide_count_processed + 1)+"枚目 / "+slide_count_all+"枚中");
+                    pr.setProgressBarMessage("作業中: " + (slide_count_processed + 1) + "枚目 / " + slide_count_all + "枚中");
                     pr.setProgressBarPercentage((100 * slide_count_processed) / slide_count_all);
 
-                    foreach (Shape shape in slide.Shapes)
+                    foreach (PowerPoint.Shape shape in slide.Shapes)
                     {
                         // Grouped Shape and Smart Art
                         if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
                         {
-                            foreach (Shape item in shape.GroupItems)
+                            foreach (PowerPoint.Shape item in shape.GroupItems)
                             {
                                 convert_shape_zenkakuToHankaku(item);
                             }
@@ -225,7 +236,7 @@ namespace BenryPPT
                             {
                                 foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
                                 {
-                                    Cell cell = shape.Table.Cell(i, j);
+                                    PowerPoint.Cell cell = shape.Table.Cell(i, j);
                                     convert_shape_zenkakuToHankaku(cell.Shape);
                                 }
                             }
@@ -239,7 +250,7 @@ namespace BenryPPT
 
                         // Shapes with texts
                         else
-                        { 
+                        {
                             convert_shape_zenkakuToHankaku(shape);
                         }
 
@@ -290,6 +301,161 @@ namespace BenryPPT
         {
             if (this.checkBox_unifyFonts.Checked) UnifyFont_Click(sender, e);
             if (this.checkBox_zenkakuToHankaku.Checked) button_zenkakuToHankaku_Click(sender, e);
+        }
+
+        private PowerPoint.Selection GetSelection()
+        {
+            try
+            {
+                return Globals.ThisAddIn.Application.ActiveWindow.Selection;
+            }
+            catch (System.Runtime.InteropServices.COMException exc)
+            {
+                // TODO
+            }
+            return null;
+        }
+
+        private PowerPoint.ShapeRange GetSelectedShapeRange()
+        {
+            PowerPoint.Selection selection = GetSelection();
+            try
+            {
+                return (selection != null) ? selection.ShapeRange : null;
+            }
+            catch (System.Runtime.InteropServices.COMException exc)
+            {
+                // TODO
+            }
+            return null;
+        }
+
+        private static int CompareTop(PowerPoint.Shape a, PowerPoint.Shape b)
+        {
+            // Shapeの上端位置で比較
+            if (a.Top > b.Top)
+            {
+                return 1;
+            }
+            else if (a.Top < b.Top)
+            {
+                return -1;
+            }
+            else
+            {
+                // Shapeの上端位置が同じ場合は、左端位置で比較
+                if (a.Left > b.Left)
+                    return 1;
+                else if (a.Left < b.Left)
+                    return -1;
+                else
+                    return 0;
+            }
+        }
+
+        private static int CompareLeft(PowerPoint.Shape a, PowerPoint.Shape b)
+        {
+            // Shapeの左端位置で比較
+            if (a.Left > b.Left)
+            {
+                return 1;
+            }
+            else if (a.Left < b.Left)
+            {
+                return -1;
+            }
+            else
+            {
+                // Shapeの左端位置が同じ場合は、上端位置で比較
+                if (a.Top > b.Top)
+                    return 1;
+                else if (a.Top < b.Top)
+                    return -1;
+                else
+                    return 0;
+            }
+        }
+
+        private void button_align_same_height_horizontal_Click(object sender, RibbonControlEventArgs e)
+        {
+            var ss = new List<PowerPoint.Shape>(); ;
+
+            var sr = GetSelectedShapeRange();
+            int c = sr.Count;
+
+            if (c > 1)
+            {
+                foreach (PowerPoint.Shape s in sr) ss.Add(s);
+                ss.Sort(CompareLeft);
+                float totalWidthBefore = ss[c - 1].Left + ss[c - 1].Width - ss[0].Left;
+
+                // Adjust height (keeping aspecto ratio)
+                sr.Height = ss[0].Height;
+                // Adjust width if specified
+                if (Settings.Default.alignWidthAlso == true)
+                {
+                    sr.Width = ss[0].Width;
+                }
+
+                float SumOfShapeWidthAfter = 0;
+                for (int i = 1; i <= c; i++) SumOfShapeWidthAfter += sr[i].Width;
+
+                float margin = (totalWidthBefore - SumOfShapeWidthAfter) / (c - 1);
+                float currentRight = ss[0].Left + ss[0].Width;
+                for (int i = 1; i < c; i++)
+                {
+                    ss[i].Top = ss[0].Top;
+                    ss[i].Left = currentRight + margin;
+                    currentRight = ss[i].Left + ss[i].Width;
+                }
+            }
+        }
+
+        private void button_align_same_width_vertical_Click(object sender, RibbonControlEventArgs e)
+        {
+            var ss = new List<PowerPoint.Shape>(); ;
+
+            var sr = GetSelectedShapeRange();
+            int c = sr.Count;
+
+            if (c > 1)
+            {
+                foreach (PowerPoint.Shape s in sr) ss.Add(s);
+                ss.Sort(CompareTop);
+                float totalHeightBefore = ss[c - 1].Top + ss[c - 1].Height - ss[0].Top;
+
+                // Adjust Width (keeping aspecto ratio)
+                sr.Width = ss[0].Width;
+                // Adjust height if specified
+                if (Settings.Default.alignHeightAlso == true)
+                {
+                    sr.Height = ss[0].Height;
+                }
+
+                float SumOfShapeHeightAfter = 0;
+                for (int i = 1; i <= c; i++) SumOfShapeHeightAfter += sr[i].Height;
+
+                float margin = (totalHeightBefore - SumOfShapeHeightAfter) / (c - 1);
+                float currentBottom = ss[0].Top + ss[0].Height;
+                for (int i = 1; i < c; i++)
+                {
+                    ss[i].Top = currentBottom + margin;
+                    ss[i].Left = ss[0].Left;
+                    currentBottom = ss[i].Top + ss[i].Height;
+                }
+            }
+        }
+
+        private void checkBox_widthAlso_Click(object sender, RibbonControlEventArgs e)
+        {
+            Settings.Default.alignWidthAlso = this.checkBox_widthAlso.Checked;
+            Settings.Default.Save();
+        }
+
+        private void checkBox_heightAlso_Click(object sender, RibbonControlEventArgs e)
+        {
+            Settings.Default.alignHeightAlso = this.checkBox_heightAlso.Checked;
+            Settings.Default.Save();
         }
     }
 }

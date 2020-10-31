@@ -70,5 +70,29 @@ namespace BenryPPT {
                 this["multipleDoZenkakuToHankaku"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool alignHeightAlso {
+            get {
+                return ((bool)(this["alignHeightAlso"]));
+            }
+            set {
+                this["alignHeightAlso"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool alignWidthAlso {
+            get {
+                return ((bool)(this["alignWidthAlso"]));
+            }
+            set {
+                this["alignWidthAlso"] = value;
+            }
+        }
     }
 }

@@ -17,7 +17,6 @@ namespace BenryPPT
             benryPane.Visible = true;
             benryPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionBottom;
         }
-
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
         }
