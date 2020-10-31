@@ -42,8 +42,8 @@
             this.label_fontFarEast = this.Factory.CreateRibbonLabel();
             this.dropDown_UnifyFontsTargetFontFarEast = this.Factory.CreateRibbonDropDown();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.group_hankaku = this.Factory.CreateRibbonGroup();
             this.button_UnifyFonts = this.Factory.CreateRibbonButton();
+            this.group_hankaku = this.Factory.CreateRibbonGroup();
             this.button_zenkakuToHankaku = this.Factory.CreateRibbonButton();
             this.group_multiple = this.Factory.CreateRibbonGroup();
             this.checkBox_unifyFonts = this.Factory.CreateRibbonCheckBox();
@@ -110,12 +110,6 @@
             // 
             this.separator1.Name = "separator1";
             // 
-            // group_hankaku
-            // 
-            this.group_hankaku.Items.Add(this.button_zenkakuToHankaku);
-            this.group_hankaku.Label = "全ページの全角英数字を半角化";
-            this.group_hankaku.Name = "group_hankaku";
-            // 
             // button_UnifyFonts
             // 
             this.button_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -125,10 +119,16 @@
             this.button_UnifyFonts.ShowImage = true;
             this.button_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
             // 
+            // group_hankaku
+            // 
+            this.group_hankaku.Items.Add(this.button_zenkakuToHankaku);
+            this.group_hankaku.Label = "全ページの全角英数字を半角化";
+            this.group_hankaku.Name = "group_hankaku";
+            // 
             // button_zenkakuToHankaku
             // 
             this.button_zenkakuToHankaku.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_zenkakuToHankaku.Label = "統一開始";
+            this.button_zenkakuToHankaku.Label = "半角化開始";
             this.button_zenkakuToHankaku.Name = "button_zenkakuToHankaku";
             this.button_zenkakuToHankaku.OfficeImageId = "AsianLayoutMenu";
             this.button_zenkakuToHankaku.ShowImage = true;
