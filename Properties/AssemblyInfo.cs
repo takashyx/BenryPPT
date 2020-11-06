@@ -36,6 +36,6 @@ using System.Runtime.InteropServices;
 // やはり製品バージョンは手動で値を振りたい。
 // 製品バージョンはAssemblyInformationalVersionを使うと振れます。
 
-[assembly: AssemblyVersion("1.4.0.*")]
+[assembly: AssemblyVersion("1.5.0.*")]
 // [assembly: AssemblyFileVersion("1.3.1.*")]
-[assembly: AssemblyInformationalVersion("1.4.0")]
+[assembly: AssemblyInformationalVersion("1.5.0")]

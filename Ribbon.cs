@@ -30,10 +30,6 @@ namespace BenryPPT
             this.checkBox_unifyFonts.Checked = Settings.Default.multipleDoFontUnify;
             this.checkBox_zenkakuToHankaku.Checked = Settings.Default.multipleDoZenkakuToHankaku;
 
-            // set height/width also checkboxes
-            this.checkBox_heightAlso.Checked = Settings.Default.alignHeightAlso;
-            this.checkBox_widthAlso.Checked = Settings.Default.alignWidthAlso;
-
             // set fontfamily to dropdown
             InstalledFontCollection fonts = new InstalledFontCollection();
             FontFamily[] ffArray = fonts.Families;
@@ -330,7 +326,7 @@ namespace BenryPPT
             return null;
         }
 
-        private static int CompareTop(PowerPoint.Shape a, PowerPoint.Shape b)
+        private static int CompareTopLeft(PowerPoint.Shape a, PowerPoint.Shape b)
         {
             // Shapeの上端位置で比較
             if (a.Top > b.Top)
@@ -353,7 +349,7 @@ namespace BenryPPT
             }
         }
 
-        private static int CompareLeft(PowerPoint.Shape a, PowerPoint.Shape b)
+        private static int CompareLeftTop(PowerPoint.Shape a, PowerPoint.Shape b)
         {
             // Shapeの左端位置で比較
             if (a.Left > b.Left)
@@ -376,86 +372,129 @@ namespace BenryPPT
             }
         }
 
-        private void button_align_same_height_horizontal_Click(object sender, RibbonControlEventArgs e)
+        private static bool isSelectedShapePortrait(List<PowerPoint.Shape> ss)
+        {
+            ss.Sort(CompareTopLeft);
+            float selectedHeight = ss.Last().Top + ss.Last().Height - ss.First().Top;
+            ss.Sort(CompareLeftTop);
+            float selectedWidth = ss.Last().Left + ss.Last().Width - ss.First().Left;
+
+            if (selectedHeight >= selectedWidth) return true;
+            else return false;
+        }
+
+
+        private void button_relocate_horizontal_Click(object sender, RibbonControlEventArgs e)
         {
             var ss = new List<PowerPoint.Shape>(); ;
 
             var sr = GetSelectedShapeRange();
+            if (sr == null) return;
+
             int c = sr.Count;
 
             if (c > 1)
             {
                 foreach (PowerPoint.Shape s in sr) ss.Add(s);
-                ss.Sort(CompareLeft);
-                float totalWidthBefore = ss[c - 1].Left + ss[c - 1].Width - ss[0].Left;
+                ss.Sort(CompareLeftTop);
+                float horizontalCenter = ss.First().Top + (ss.First().Height / 2);
 
-                // Adjust height (keeping aspecto ratio)
-                sr.Height = ss[0].Height;
-                // Adjust width if specified
-                if (Settings.Default.alignWidthAlso == true)
-                {
-                    sr.Width = ss[0].Width;
-                }
+                float selectedWidth = (ss.Last().Left + ss.Last().Width) - ss.First().Left;
 
-                float SumOfShapeWidthAfter = 0;
-                for (int i = 1; i <= c; i++) SumOfShapeWidthAfter += sr[i].Width;
+                float SumOfShapeWidth = 0;
+                for (int i = 0; i < c; i++) SumOfShapeWidth += ss[i].Width;
 
-                float margin = (totalWidthBefore - SumOfShapeWidthAfter) / (c - 1);
+                float margin = (selectedWidth - SumOfShapeWidth) / (c - 1);
                 float currentRight = ss[0].Left + ss[0].Width;
                 for (int i = 1; i < c; i++)
                 {
-                    ss[i].Top = ss[0].Top;
+                    ss[i].Top = horizontalCenter - (ss[i].Height/2);
                     ss[i].Left = currentRight + margin;
                     currentRight = ss[i].Left + ss[i].Width;
                 }
             }
         }
 
-        private void button_align_same_width_vertical_Click(object sender, RibbonControlEventArgs e)
+        private void button_relocate_vertical_Click(object sender, RibbonControlEventArgs e)
         {
             var ss = new List<PowerPoint.Shape>(); ;
 
             var sr = GetSelectedShapeRange();
+            if (sr == null) return;
+
             int c = sr.Count;
 
             if (c > 1)
             {
                 foreach (PowerPoint.Shape s in sr) ss.Add(s);
-                ss.Sort(CompareTop);
-                float totalHeightBefore = ss[c - 1].Top + ss[c - 1].Height - ss[0].Top;
+                ss.Sort(CompareTopLeft);
+                float verticalCenter = ss.First().Left + (ss.First().Width / 2);
 
-                // Adjust Width (keeping aspecto ratio)
-                sr.Width = ss[0].Width;
-                // Adjust height if specified
-                if (Settings.Default.alignHeightAlso == true)
-                {
-                    sr.Height = ss[0].Height;
-                }
+                float selectedHeight = (ss.Last().Top + ss.Last().Height) - ss.First().Top;
 
-                float SumOfShapeHeightAfter = 0;
-                for (int i = 1; i <= c; i++) SumOfShapeHeightAfter += sr[i].Height;
+                float SumOfShapeHeight = 0;
+                for (int i = 0; i < c; i++) SumOfShapeHeight += ss[i].Height;
 
-                float margin = (totalHeightBefore - SumOfShapeHeightAfter) / (c - 1);
+                float margin = (selectedHeight - SumOfShapeHeight) / (c - 1);
                 float currentBottom = ss[0].Top + ss[0].Height;
                 for (int i = 1; i < c; i++)
                 {
+                    ss[i].Left = verticalCenter - (ss[i].Width/2);
                     ss[i].Top = currentBottom + margin;
-                    ss[i].Left = ss[0].Left;
                     currentBottom = ss[i].Top + ss[i].Height;
                 }
             }
         }
 
-        private void checkBox_widthAlso_Click(object sender, RibbonControlEventArgs e)
+        private void button_resize_width_Click(object sender, RibbonControlEventArgs e)
         {
-            Settings.Default.alignWidthAlso = this.checkBox_widthAlso.Checked;
-            Settings.Default.Save();
+            var ss = new List<PowerPoint.Shape>(); ;
+
+            var sr = GetSelectedShapeRange();
+            if (sr == null) return;
+
+            int c = sr.Count;
+
+
+            if (c > 1)
+            {
+                foreach (PowerPoint.Shape s in sr) ss.Add(s);
+                if (isSelectedShapePortrait(ss)) ss.Sort(CompareTopLeft);
+                else ss.Sort(CompareLeftTop);
+
+                for (int i = 1; i < c; i++)
+                {
+                    float widthDiff = (ss.First().Width - ss[i].Width);
+                    ss[i].Left -= (widthDiff / 2);
+                    ss[i].Width = ss.First().Width;
+                }
+            }
         }
 
-        private void checkBox_heightAlso_Click(object sender, RibbonControlEventArgs e)
+        private void button_resize_height_Click(object sender, RibbonControlEventArgs e)
         {
-            Settings.Default.alignHeightAlso = this.checkBox_heightAlso.Checked;
-            Settings.Default.Save();
+            var ss = new List<PowerPoint.Shape>(); ;
+
+            var sr = GetSelectedShapeRange();
+            if (sr == null) return;
+
+            int c = sr.Count;
+
+            if (c > 1)
+            {
+                foreach (PowerPoint.Shape s in sr) ss.Add(s);
+                if (isSelectedShapePortrait(ss)) ss.Sort(CompareTopLeft);
+                else ss.Sort(CompareLeftTop);
+
+                for (int i = 1; i < c; i++)
+                {
+                    float heightDiff = (ss.First().Height - ss[i].Height);
+                    ss[i].Top -= (heightDiff / 2);
+                    ss[i].Height = ss.First().Height;
+                }
+            }
+
+
         }
     }
 }

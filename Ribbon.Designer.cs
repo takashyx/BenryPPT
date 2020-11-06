@@ -46,24 +46,25 @@
             this.group_multiple = this.Factory.CreateRibbonGroup();
             this.checkBox_unifyFonts = this.Factory.CreateRibbonCheckBox();
             this.checkBox_zenkakuToHankaku = this.Factory.CreateRibbonCheckBox();
-            this.group2 = this.Factory.CreateRibbonGroup();
+            this.group_resize = this.Factory.CreateRibbonGroup();
+            this.group_locate = this.Factory.CreateRibbonGroup();
+            this.group_info = this.Factory.CreateRibbonGroup();
+            this.label_versionTitle = this.Factory.CreateRibbonLabel();
+            this.label_ProductVersion = this.Factory.CreateRibbonLabel();
+            this.label_assemblyFileversion = this.Factory.CreateRibbonLabel();
             this.button_UnifyFonts = this.Factory.CreateRibbonButton();
             this.button_zenkakuToHankaku = this.Factory.CreateRibbonButton();
             this.button_multiple = this.Factory.CreateRibbonButton();
-            this.button_align_same_height_horizontal = this.Factory.CreateRibbonButton();
-            this.button_align_same_width_vertical = this.Factory.CreateRibbonButton();
-            this.checkBox_widthAlso = this.Factory.CreateRibbonCheckBox();
-            this.checkBox_heightAlso = this.Factory.CreateRibbonCheckBox();
-            this.separator3 = this.Factory.CreateRibbonSeparator();
-            this.group_info = this.Factory.CreateRibbonGroup();
-            this.label_ProductVersion = this.Factory.CreateRibbonLabel();
-            this.label_assemblyFileversion = this.Factory.CreateRibbonLabel();
-            this.label_versionTitle = this.Factory.CreateRibbonLabel();
+            this.button_resize_width = this.Factory.CreateRibbonButton();
+            this.button_resize_height = this.Factory.CreateRibbonButton();
+            this.button_relocate_horizontal = this.Factory.CreateRibbonButton();
+            this.button_relocate_vertical = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
             this.group_hankaku.SuspendLayout();
             this.group_multiple.SuspendLayout();
-            this.group2.SuspendLayout();
+            this.group_resize.SuspendLayout();
+            this.group_locate.SuspendLayout();
             this.group_info.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,7 +74,8 @@
             this.tab_Benry.Groups.Add(this.group1);
             this.tab_Benry.Groups.Add(this.group_hankaku);
             this.tab_Benry.Groups.Add(this.group_multiple);
-            this.tab_Benry.Groups.Add(this.group2);
+            this.tab_Benry.Groups.Add(this.group_resize);
+            this.tab_Benry.Groups.Add(this.group_locate);
             this.tab_Benry.Groups.Add(this.group_info);
             this.tab_Benry.Label = "【Benry】";
             this.tab_Benry.Name = "tab_Benry";
@@ -150,15 +152,42 @@
             this.checkBox_zenkakuToHankaku.Name = "checkBox_zenkakuToHankaku";
             this.checkBox_zenkakuToHankaku.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox_zenkakuToHankaku_Click);
             // 
-            // group2
+            // group_resize
             // 
-            this.group2.Items.Add(this.checkBox_widthAlso);
-            this.group2.Items.Add(this.button_align_same_height_horizontal);
-            this.group2.Items.Add(this.separator3);
-            this.group2.Items.Add(this.checkBox_heightAlso);
-            this.group2.Items.Add(this.button_align_same_width_vertical);
-            this.group2.Label = "左上の選択図形とサイズを合わせて均等に再配置";
-            this.group2.Name = "group2";
+            this.group_resize.Items.Add(this.button_resize_width);
+            this.group_resize.Items.Add(this.button_resize_height);
+            this.group_resize.Label = "選択した図形のサイズを一番左上の図形と統一";
+            this.group_resize.Name = "group_resize";
+            // 
+            // group_locate
+            // 
+            this.group_locate.Items.Add(this.button_relocate_horizontal);
+            this.group_locate.Items.Add(this.button_relocate_vertical);
+            this.group_locate.Label = "中心を合わせて均等間隔に配置";
+            this.group_locate.Name = "group_locate";
+            // 
+            // group_info
+            // 
+            this.group_info.Items.Add(this.label_versionTitle);
+            this.group_info.Items.Add(this.label_ProductVersion);
+            this.group_info.Items.Add(this.label_assemblyFileversion);
+            this.group_info.Label = "バージョン情報";
+            this.group_info.Name = "group_info";
+            // 
+            // label_versionTitle
+            // 
+            this.label_versionTitle.Label = "BenryPPT";
+            this.label_versionTitle.Name = "label_versionTitle";
+            // 
+            // label_ProductVersion
+            // 
+            this.label_ProductVersion.Label = "product version";
+            this.label_ProductVersion.Name = "label_ProductVersion";
+            // 
+            // label_assemblyFileversion
+            // 
+            this.label_assemblyFileversion.Label = "label_assemblyFileVersion";
+            this.label_assemblyFileversion.Name = "label_assemblyFileversion";
             // 
             // button_UnifyFonts
             // 
@@ -187,62 +216,41 @@
             this.button_multiple.ShowImage = true;
             this.button_multiple.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_multiple_Click);
             // 
-            // button_align_same_height_horizontal
+            // button_resize_width
             // 
-            this.button_align_same_height_horizontal.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_align_same_height_horizontal.Label = "高さを合わせて横に並べる";
-            this.button_align_same_height_horizontal.Name = "button_align_same_height_horizontal";
-            this.button_align_same_height_horizontal.OfficeImageId = "PrintPreviewZoomTwoPages";
-            this.button_align_same_height_horizontal.ShowImage = true;
-            this.button_align_same_height_horizontal.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_align_same_height_horizontal_Click);
+            this.button_resize_width.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_resize_width.Label = "幅を合わせる";
+            this.button_resize_width.Name = "button_resize_width";
+            this.button_resize_width.OfficeImageId = "WebPartWidth";
+            this.button_resize_width.ShowImage = true;
+            this.button_resize_width.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_resize_width_Click);
             // 
-            // button_align_same_width_vertical
+            // button_resize_height
             // 
-            this.button_align_same_width_vertical.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_align_same_width_vertical.Label = "幅を合わせて縦に並べる";
-            this.button_align_same_width_vertical.Name = "button_align_same_width_vertical";
-            this.button_align_same_width_vertical.OfficeImageId = "WindowsTileHorizontally";
-            this.button_align_same_width_vertical.ShowImage = true;
-            this.button_align_same_width_vertical.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_align_same_width_vertical_Click);
+            this.button_resize_height.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_resize_height.Label = "高さを合わせる";
+            this.button_resize_height.Name = "button_resize_height";
+            this.button_resize_height.OfficeImageId = "WebPartHeight";
+            this.button_resize_height.ShowImage = true;
+            this.button_resize_height.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_resize_height_Click);
             // 
-            // checkBox_widthAlso
+            // button_relocate_horizontal
             // 
-            this.checkBox_widthAlso.Label = "幅も合わせる";
-            this.checkBox_widthAlso.Name = "checkBox_widthAlso";
-            this.checkBox_widthAlso.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox_widthAlso_Click);
+            this.button_relocate_horizontal.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_relocate_horizontal.Label = "横に均等な間隔で並べる";
+            this.button_relocate_horizontal.Name = "button_relocate_horizontal";
+            this.button_relocate_horizontal.OfficeImageId = "HorizontalSpacingMakeEqual";
+            this.button_relocate_horizontal.ShowImage = true;
+            this.button_relocate_horizontal.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_horizontal_Click);
             // 
-            // checkBox_heightAlso
+            // button_relocate_vertical
             // 
-            this.checkBox_heightAlso.Label = "高さも合わせる";
-            this.checkBox_heightAlso.Name = "checkBox_heightAlso";
-            this.checkBox_heightAlso.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox_heightAlso_Click);
-            // 
-            // separator3
-            // 
-            this.separator3.Name = "separator3";
-            // 
-            // group_info
-            // 
-            this.group_info.Items.Add(this.label_versionTitle);
-            this.group_info.Items.Add(this.label_ProductVersion);
-            this.group_info.Items.Add(this.label_assemblyFileversion);
-            this.group_info.Label = "バージョン情報";
-            this.group_info.Name = "group_info";
-            // 
-            // label_ProductVersion
-            // 
-            this.label_ProductVersion.Label = "product version";
-            this.label_ProductVersion.Name = "label_ProductVersion";
-            // 
-            // label_assemblyFileversion
-            // 
-            this.label_assemblyFileversion.Label = "label_assemblyFileVersion";
-            this.label_assemblyFileversion.Name = "label_assemblyFileversion";
-            // 
-            // label_versionTitle
-            // 
-            this.label_versionTitle.Label = "BenryPPT";
-            this.label_versionTitle.Name = "label_versionTitle";
+            this.button_relocate_vertical.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_relocate_vertical.Label = "縦に均等な間隔で並べる";
+            this.button_relocate_vertical.Name = "button_relocate_vertical";
+            this.button_relocate_vertical.OfficeImageId = "VerticalSpacingMakeEqual";
+            this.button_relocate_vertical.ShowImage = true;
+            this.button_relocate_vertical.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_vertical_Click);
             // 
             // Ribbon
             // 
@@ -258,8 +266,10 @@
             this.group_hankaku.PerformLayout();
             this.group_multiple.ResumeLayout(false);
             this.group_multiple.PerformLayout();
-            this.group2.ResumeLayout(false);
-            this.group2.PerformLayout();
+            this.group_resize.ResumeLayout(false);
+            this.group_resize.PerformLayout();
+            this.group_locate.ResumeLayout(false);
+            this.group_locate.PerformLayout();
             this.group_info.ResumeLayout(false);
             this.group_info.PerformLayout();
             this.ResumeLayout(false);
@@ -283,16 +293,16 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox_unifyFonts;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox_zenkakuToHankaku;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_multiple;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_align_same_height_horizontal;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_align_same_width_vertical;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox_widthAlso;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBox_heightAlso;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_locate;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_relocate_horizontal;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_relocate_vertical;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_info;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label_ProductVersion;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label_assemblyFileversion;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel label_versionTitle;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_resize;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_resize_width;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_resize_height;
     }
 
     partial class ThisRibbonCollection
