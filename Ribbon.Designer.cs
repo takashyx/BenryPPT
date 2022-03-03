@@ -48,6 +48,7 @@
             this.checkBox_zenkakuToHankaku = this.Factory.CreateRibbonCheckBox();
             this.group_resize = this.Factory.CreateRibbonGroup();
             this.group_locate = this.Factory.CreateRibbonGroup();
+            this.bufontissue_killer = this.Factory.CreateRibbonGroup();
             this.group_info = this.Factory.CreateRibbonGroup();
             this.label_versionTitle = this.Factory.CreateRibbonLabel();
             this.label_ProductVersion = this.Factory.CreateRibbonLabel();
@@ -59,12 +60,14 @@
             this.button_resize_height = this.Factory.CreateRibbonButton();
             this.button_relocate_horizontal = this.Factory.CreateRibbonButton();
             this.button_relocate_vertical = this.Factory.CreateRibbonButton();
+            this.button_kill_bufont_issue = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
             this.group_hankaku.SuspendLayout();
             this.group_multiple.SuspendLayout();
             this.group_resize.SuspendLayout();
             this.group_locate.SuspendLayout();
+            this.bufontissue_killer.SuspendLayout();
             this.group_info.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +79,7 @@
             this.tab_Benry.Groups.Add(this.group_multiple);
             this.tab_Benry.Groups.Add(this.group_resize);
             this.tab_Benry.Groups.Add(this.group_locate);
+            this.tab_Benry.Groups.Add(this.bufontissue_killer);
             this.tab_Benry.Groups.Add(this.group_info);
             this.tab_Benry.Label = "【Benry】";
             this.tab_Benry.Name = "tab_Benry";
@@ -166,6 +170,12 @@
             this.group_locate.Label = "中心を合わせて均等間隔に配置";
             this.group_locate.Name = "group_locate";
             // 
+            // bufontissue_killer
+            // 
+            this.bufontissue_killer.Items.Add(this.button_kill_bufont_issue);
+            this.bufontissue_killer.Label = "[beta]フォントによる保存不具合解消";
+            this.bufontissue_killer.Name = "bufontissue_killer";
+            // 
             // group_info
             // 
             this.group_info.Items.Add(this.label_versionTitle);
@@ -252,6 +262,15 @@
             this.button_relocate_vertical.ShowImage = true;
             this.button_relocate_vertical.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_vertical_Click);
             // 
+            // button_kill_bufont_issue
+            // 
+            this.button_kill_bufont_issue.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_kill_bufont_issue.Label = "除霊";
+            this.button_kill_bufont_issue.Name = "button_kill_bufont_issue";
+            this.button_kill_bufont_issue.OfficeImageId = "HappyFace";
+            this.button_kill_bufont_issue.ShowImage = true;
+            this.button_kill_bufont_issue.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_kill_bufont_issue_Click);
+            // 
             // Ribbon
             // 
             this.Name = "Ribbon";
@@ -270,6 +289,8 @@
             this.group_resize.PerformLayout();
             this.group_locate.ResumeLayout(false);
             this.group_locate.PerformLayout();
+            this.bufontissue_killer.ResumeLayout(false);
+            this.bufontissue_killer.PerformLayout();
             this.group_info.ResumeLayout(false);
             this.group_info.PerformLayout();
             this.ResumeLayout(false);
@@ -303,6 +324,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_resize;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_resize_width;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_resize_height;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup bufontissue_killer;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_kill_bufont_issue;
     }
 
     partial class ThisRibbonCollection

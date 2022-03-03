@@ -200,6 +200,11 @@ namespace BenryPPT
             if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue) shape.TextFrame.TextRange.Text = abc123ToHankaku(shape.TextFrame.TextRange.Text);
         }
 
+        private void convert_shape_bufont(PowerPoint.Shape shape)
+        {
+            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue) shape.TextFrame.TextRange.ParagraphFormat.Bullet.Font.Name = "Arial";
+        }
+
         private void convertZenkakuToHankaku(FormProgress pr)
         {
             try
@@ -260,6 +265,63 @@ namespace BenryPPT
                 System.Windows.Forms.MessageBox.Show("Benry Error: \n" + ex);
             }
             Debug.WriteLine("Converting Done.");
+        }
+
+        private void convert_bufont(FormProgress pr)
+        {
+            try
+            {
+                // For  <a:buFont typeface="Noto Sans Symbols"/>
+                // convert slide items
+                var slides = Globals.ThisAddIn.Application.ActivePresentation.Slides;
+                int slide_count_all = slides.Count;
+                int slide_count_processed = 0;
+
+                foreach (PowerPoint.Slide slide in slides)
+                {
+                    pr.setProgressBarMessage("作業中: " + (slide_count_processed + 1) + "枚目 / " + slide_count_all + "枚中");
+                    pr.setProgressBarPercentage((100 * slide_count_processed) / slide_count_all);
+
+                    foreach (PowerPoint.Shape shape in slide.Shapes)
+                    {
+                        // Grouped Shape and Smart Art
+                        if (shape.Type == Microsoft.Office.Core.MsoShapeType.msoGroup || shape.Type == Microsoft.Office.Core.MsoShapeType.msoSmartArt)
+                        {
+                            foreach (PowerPoint.Shape item in shape.GroupItems)
+                            {
+                                convert_shape_bufont(item);
+                            }
+                        }
+
+                        // Tables
+                        if (shape.HasTable == Microsoft.Office.Core.MsoTriState.msoTrue)
+                        {
+                            foreach (int i in Enumerable.Range(1, shape.Table.Rows.Count))
+                            {
+                                foreach (int j in Enumerable.Range(1, shape.Table.Columns.Count))
+                                {
+                                    PowerPoint.Cell cell = shape.Table.Cell(i, j);
+                                    convert_shape_bufont(cell.Shape);
+                                }
+                            }
+                        }
+
+                        // Shapes with texts
+                        else
+                        {
+                            convert_shape_bufont(shape);
+                        }
+
+                    }
+                    slide_count_processed += 1;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Benry Error: \n" + ex);
+            }
+            Debug.Write("Notosans killer done.");
         }
 
         private void button_zenkakuToHankaku_Click(object sender, RibbonControlEventArgs e)
@@ -495,6 +557,22 @@ namespace BenryPPT
             }
 
 
+        }
+
+        private void button_kill_bufont_issue_Click(object sender, RibbonControlEventArgs e)
+        {
+            this.button_kill_bufont_issue.Enabled = false;
+            // show progress bar and convert
+            var progress = new FormProgress();
+
+            progress.setFormTitle("除霊中");
+            progress.Show();
+
+            convert_bufont(progress);
+
+            progress.exitForm();
+
+            this.button_kill_bufont_issue.Enabled = true;
         }
     }
 }
