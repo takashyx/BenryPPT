@@ -28,12 +28,12 @@
     <AssemblyName>BenryPPT</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
-    <IsWebBootstrapper>False</IsWebBootstrapper>
+    <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>C:\Users\takas\Dropbox\configure\BenryPPT\</PublishUrl>
-    <InstallUrl />
+    <InstallUrl>https://github.com/takashyx/BenryPPT/</InstallUrl>
     <TargetCulture>ja</TargetCulture>
-    <ApplicationVersion>1.5.0.1</ApplicationVersion>
+    <ApplicationVersion>1.6.0.2</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -208,6 +208,7 @@
       <DependentUpon>Ribbon.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="BenryPPT_1_TemporaryKey.pfx" />
     <None Include="BenryPPT_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -251,10 +252,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>BenryPPT_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>BenryPPT_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>9D4C6CFBA1C6BB1BFE7C132E7544505D93E5F115</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E64E86FC3D78B184EC3F1A7A9481B73F66FB608C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
