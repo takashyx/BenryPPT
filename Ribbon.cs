@@ -184,10 +184,8 @@ namespace BenryPPT
 
         private static string abc123ToHankaku(string s)
         {
-            Regex re = new Regex("[０-９Ａ-Ｚａ-ｚ：－　]+");
-            string output = re.Replace(s, myReplacer);
-
-            return output;
+            Regex re = new Regex("[０-９Ａ-Ｚａ-ｚ：；－＿　]+");
+            return re.Replace(s, myReplacer);
         }
 
         private static string myReplacer(Match m)
@@ -197,7 +195,21 @@ namespace BenryPPT
 
         private void convert_shape_zenkakuToHankaku(PowerPoint.Shape shape)
         {
-            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue) shape.TextFrame.TextRange.Text = abc123ToHankaku(shape.TextFrame.TextRange.Text);
+            if (shape.HasTextFrame == Microsoft.Office.Core.MsoTriState.msoTrue)
+            {
+                int count = shape.TextFrame.TextRange.Runs(-1,-1).Count;
+                for (int i = count; i > 0; i--)
+                {
+                    PowerPoint.TextRange run = shape.TextFrame.TextRange.Runs(i);
+                    /*
+                    Debug.WriteLine(run.Text);
+                    Debug.WriteLine("-");
+                    Debug.WriteLine(abc123ToHankaku(run.Text));
+                    Debug.WriteLine("--------------------");
+                    */
+                    run.Text = abc123ToHankaku(run.Text);
+                }
+            }
         }
 
         private void convert_shape_bufont(PowerPoint.Shape shape)
