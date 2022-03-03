@@ -28,12 +28,12 @@
     <AssemblyName>BenryPPT</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
-    <IsWebBootstrapper>True</IsWebBootstrapper>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>C:\Users\takas\Dropbox\configure\BenryPPT\</PublishUrl>
-    <InstallUrl>https://github.com/takashyx/BenryPPT/</InstallUrl>
+    <InstallUrl />
     <TargetCulture>ja</TargetCulture>
-    <ApplicationVersion>1.6.0.2</ApplicationVersion>
+    <ApplicationVersion>1.6.0.4</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
