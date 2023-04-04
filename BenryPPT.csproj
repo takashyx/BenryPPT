@@ -33,7 +33,7 @@
     <PublishUrl>C:\Users\takas\Dropbox\configure\BenryPPT\</PublishUrl>
     <InstallUrl />
     <TargetCulture>ja</TargetCulture>
-    <ApplicationVersion>1.6.0.4</ApplicationVersion>
+    <ApplicationVersion>1.7.0.1</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
@@ -209,6 +209,7 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="BenryPPT_1_TemporaryKey.pfx" />
+    <None Include="BenryPPT_2_TemporaryKey.pfx" />
     <None Include="BenryPPT_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -255,10 +256,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>BenryPPT_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>BenryPPT_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E64E86FC3D78B184EC3F1A7A9481B73F66FB608C</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>CF62522618DD5A7E791D54045E5FE0D65B110FE1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
