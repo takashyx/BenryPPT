@@ -42,25 +42,27 @@
             this.label_fontFarEast = this.Factory.CreateRibbonLabel();
             this.dropDown_UnifyFontsTargetFontFarEast = this.Factory.CreateRibbonDropDown();
             this.separator1 = this.Factory.CreateRibbonSeparator();
+            this.button_UnifyFonts = this.Factory.CreateRibbonButton();
             this.group_hankaku = this.Factory.CreateRibbonGroup();
+            this.button_zenkakuToHankaku = this.Factory.CreateRibbonButton();
             this.group_multiple = this.Factory.CreateRibbonGroup();
             this.checkBox_unifyFonts = this.Factory.CreateRibbonCheckBox();
             this.checkBox_zenkakuToHankaku = this.Factory.CreateRibbonCheckBox();
+            this.button_multiple = this.Factory.CreateRibbonButton();
             this.group_resize = this.Factory.CreateRibbonGroup();
+            this.button_resize_width = this.Factory.CreateRibbonButton();
+            this.button_resize_height = this.Factory.CreateRibbonButton();
             this.group_locate = this.Factory.CreateRibbonGroup();
+            this.button_relocate_horizontal = this.Factory.CreateRibbonButton();
+            this.button_relocate_vertical = this.Factory.CreateRibbonButton();
             this.group_fontissue_killer = this.Factory.CreateRibbonGroup();
+            this.button_kill_font_issue = this.Factory.CreateRibbonButton();
             this.group_info = this.Factory.CreateRibbonGroup();
             this.label_versionTitle = this.Factory.CreateRibbonLabel();
             this.label_ProductVersion = this.Factory.CreateRibbonLabel();
             this.label_assemblyFileversion = this.Factory.CreateRibbonLabel();
-            this.button_UnifyFonts = this.Factory.CreateRibbonButton();
-            this.button_zenkakuToHankaku = this.Factory.CreateRibbonButton();
-            this.button_multiple = this.Factory.CreateRibbonButton();
-            this.button_resize_width = this.Factory.CreateRibbonButton();
-            this.button_resize_height = this.Factory.CreateRibbonButton();
-            this.button_relocate_horizontal = this.Factory.CreateRibbonButton();
-            this.button_relocate_vertical = this.Factory.CreateRibbonButton();
-            this.button_kill_font_issue = this.Factory.CreateRibbonButton();
+            this.group_swap_objects = this.Factory.CreateRibbonGroup();
+            this.button_swap_objects = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
             this.group_hankaku.SuspendLayout();
@@ -69,6 +71,7 @@
             this.group_locate.SuspendLayout();
             this.group_fontissue_killer.SuspendLayout();
             this.group_info.SuspendLayout();
+            this.group_swap_objects.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab_Benry
@@ -79,6 +82,7 @@
             this.tab_Benry.Groups.Add(this.group_multiple);
             this.tab_Benry.Groups.Add(this.group_resize);
             this.tab_Benry.Groups.Add(this.group_locate);
+            this.tab_Benry.Groups.Add(this.group_swap_objects);
             this.tab_Benry.Groups.Add(this.group_fontissue_killer);
             this.tab_Benry.Groups.Add(this.group_info);
             this.tab_Benry.Label = "【Benry】";
@@ -130,11 +134,29 @@
             // 
             this.separator1.Name = "separator1";
             // 
+            // button_UnifyFonts
+            // 
+            this.button_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_UnifyFonts.Label = "統一開始";
+            this.button_UnifyFonts.Name = "button_UnifyFonts";
+            this.button_UnifyFonts.OfficeImageId = "FontsReplaceFonts";
+            this.button_UnifyFonts.ShowImage = true;
+            this.button_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
+            // 
             // group_hankaku
             // 
             this.group_hankaku.Items.Add(this.button_zenkakuToHankaku);
             this.group_hankaku.Label = "全ページの全角英数字を半角化";
             this.group_hankaku.Name = "group_hankaku";
+            // 
+            // button_zenkakuToHankaku
+            // 
+            this.button_zenkakuToHankaku.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_zenkakuToHankaku.Label = "半角化開始";
+            this.button_zenkakuToHankaku.Name = "button_zenkakuToHankaku";
+            this.button_zenkakuToHankaku.OfficeImageId = "AsianLayoutMenu";
+            this.button_zenkakuToHankaku.ShowImage = true;
+            this.button_zenkakuToHankaku.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_zenkakuToHankaku_Click);
             // 
             // group_multiple
             // 
@@ -156,12 +178,39 @@
             this.checkBox_zenkakuToHankaku.Name = "checkBox_zenkakuToHankaku";
             this.checkBox_zenkakuToHankaku.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkBox_zenkakuToHankaku_Click);
             // 
+            // button_multiple
+            // 
+            this.button_multiple.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_multiple.Label = "まとめて開始";
+            this.button_multiple.Name = "button_multiple";
+            this.button_multiple.OfficeImageId = "WorkTrackingForm";
+            this.button_multiple.ShowImage = true;
+            this.button_multiple.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_multiple_Click);
+            // 
             // group_resize
             // 
             this.group_resize.Items.Add(this.button_resize_width);
             this.group_resize.Items.Add(this.button_resize_height);
             this.group_resize.Label = "選択した図形のサイズを一番左上の図形と統一";
             this.group_resize.Name = "group_resize";
+            // 
+            // button_resize_width
+            // 
+            this.button_resize_width.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_resize_width.Label = "幅を合わせる";
+            this.button_resize_width.Name = "button_resize_width";
+            this.button_resize_width.OfficeImageId = "WebPartWidth";
+            this.button_resize_width.ShowImage = true;
+            this.button_resize_width.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_resize_width_Click);
+            // 
+            // button_resize_height
+            // 
+            this.button_resize_height.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_resize_height.Label = "高さを合わせる";
+            this.button_resize_height.Name = "button_resize_height";
+            this.button_resize_height.OfficeImageId = "WebPartHeight";
+            this.button_resize_height.ShowImage = true;
+            this.button_resize_height.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_resize_height_Click);
             // 
             // group_locate
             // 
@@ -170,11 +219,38 @@
             this.group_locate.Label = "中心を合わせて均等間隔に配置";
             this.group_locate.Name = "group_locate";
             // 
-            // bufontissue_killer
+            // button_relocate_horizontal
+            // 
+            this.button_relocate_horizontal.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_relocate_horizontal.Label = "横に均等な間隔で並べる";
+            this.button_relocate_horizontal.Name = "button_relocate_horizontal";
+            this.button_relocate_horizontal.OfficeImageId = "HorizontalSpacingMakeEqual";
+            this.button_relocate_horizontal.ShowImage = true;
+            this.button_relocate_horizontal.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_horizontal_Click);
+            // 
+            // button_relocate_vertical
+            // 
+            this.button_relocate_vertical.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_relocate_vertical.Label = "縦に均等な間隔で並べる";
+            this.button_relocate_vertical.Name = "button_relocate_vertical";
+            this.button_relocate_vertical.OfficeImageId = "VerticalSpacingMakeEqual";
+            this.button_relocate_vertical.ShowImage = true;
+            this.button_relocate_vertical.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_vertical_Click);
+            // 
+            // group_fontissue_killer
             // 
             this.group_fontissue_killer.Items.Add(this.button_kill_font_issue);
             this.group_fontissue_killer.Label = "[beta]フォントによる保存不具合解消";
-            this.group_fontissue_killer.Name = "bufontissue_killer";
+            this.group_fontissue_killer.Name = "group_fontissue_killer";
+            // 
+            // button_kill_font_issue
+            // 
+            this.button_kill_font_issue.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_kill_font_issue.Label = "除霊";
+            this.button_kill_font_issue.Name = "button_kill_font_issue";
+            this.button_kill_font_issue.OfficeImageId = "HappyFace";
+            this.button_kill_font_issue.ShowImage = true;
+            this.button_kill_font_issue.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_kill_bufont_issue_Click);
             // 
             // group_info
             // 
@@ -199,77 +275,19 @@
             this.label_assemblyFileversion.Label = "label_assemblyFileVersion";
             this.label_assemblyFileversion.Name = "label_assemblyFileversion";
             // 
-            // button_UnifyFonts
+            // group_swap_objects
             // 
-            this.button_UnifyFonts.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_UnifyFonts.Label = "統一開始";
-            this.button_UnifyFonts.Name = "button_UnifyFonts";
-            this.button_UnifyFonts.OfficeImageId = "FontsReplaceFonts";
-            this.button_UnifyFonts.ShowImage = true;
-            this.button_UnifyFonts.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.UnifyFont_Click);
+            this.group_swap_objects.Items.Add(this.button_swap_objects);
+            this.group_swap_objects.Label = "group_swap_objects";
+            this.group_swap_objects.Name = "group_swap_objects";
             // 
-            // button_zenkakuToHankaku
+            // button_swap_objects
             // 
-            this.button_zenkakuToHankaku.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_zenkakuToHankaku.Label = "半角化開始";
-            this.button_zenkakuToHankaku.Name = "button_zenkakuToHankaku";
-            this.button_zenkakuToHankaku.OfficeImageId = "AsianLayoutMenu";
-            this.button_zenkakuToHankaku.ShowImage = true;
-            this.button_zenkakuToHankaku.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_zenkakuToHankaku_Click);
-            // 
-            // button_multiple
-            // 
-            this.button_multiple.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_multiple.Label = "まとめて開始";
-            this.button_multiple.Name = "button_multiple";
-            this.button_multiple.OfficeImageId = "WorkTrackingForm";
-            this.button_multiple.ShowImage = true;
-            this.button_multiple.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_multiple_Click);
-            // 
-            // button_resize_width
-            // 
-            this.button_resize_width.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_resize_width.Label = "幅を合わせる";
-            this.button_resize_width.Name = "button_resize_width";
-            this.button_resize_width.OfficeImageId = "WebPartWidth";
-            this.button_resize_width.ShowImage = true;
-            this.button_resize_width.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_resize_width_Click);
-            // 
-            // button_resize_height
-            // 
-            this.button_resize_height.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_resize_height.Label = "高さを合わせる";
-            this.button_resize_height.Name = "button_resize_height";
-            this.button_resize_height.OfficeImageId = "WebPartHeight";
-            this.button_resize_height.ShowImage = true;
-            this.button_resize_height.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_resize_height_Click);
-            // 
-            // button_relocate_horizontal
-            // 
-            this.button_relocate_horizontal.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_relocate_horizontal.Label = "横に均等な間隔で並べる";
-            this.button_relocate_horizontal.Name = "button_relocate_horizontal";
-            this.button_relocate_horizontal.OfficeImageId = "HorizontalSpacingMakeEqual";
-            this.button_relocate_horizontal.ShowImage = true;
-            this.button_relocate_horizontal.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_horizontal_Click);
-            // 
-            // button_relocate_vertical
-            // 
-            this.button_relocate_vertical.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_relocate_vertical.Label = "縦に均等な間隔で並べる";
-            this.button_relocate_vertical.Name = "button_relocate_vertical";
-            this.button_relocate_vertical.OfficeImageId = "VerticalSpacingMakeEqual";
-            this.button_relocate_vertical.ShowImage = true;
-            this.button_relocate_vertical.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_vertical_Click);
-            // 
-            // button_kill_font_issue
-            // 
-            this.button_kill_font_issue.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_kill_font_issue.Label = "除霊";
-            this.button_kill_font_issue.Name = "button_kill_font_issue";
-            this.button_kill_font_issue.OfficeImageId = "HappyFace";
-            this.button_kill_font_issue.ShowImage = true;
-            this.button_kill_font_issue.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_kill_bufont_issue_Click);
+            this.button_swap_objects.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_swap_objects.Label = "入れ替え";
+            this.button_swap_objects.Name = "button_swap_objects";
+            this.button_swap_objects.OfficeImageId = "HappyFace";
+            this.button_swap_objects.ShowImage = true;
             // 
             // Ribbon
             // 
@@ -293,6 +311,8 @@
             this.group_fontissue_killer.PerformLayout();
             this.group_info.ResumeLayout(false);
             this.group_info.PerformLayout();
+            this.group_swap_objects.ResumeLayout(false);
+            this.group_swap_objects.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -326,6 +346,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_resize_height;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_fontissue_killer;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_kill_font_issue;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_swap_objects;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_swap_objects;
     }
 
     partial class ThisRibbonCollection
