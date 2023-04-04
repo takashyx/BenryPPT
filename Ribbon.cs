@@ -547,7 +547,7 @@ namespace BenryPPT
 
         private void button_resize_height_Click(object sender, RibbonControlEventArgs e)
         {
-            var ss = new List<PowerPoint.Shape>(); ;
+            var ss = new List<PowerPoint.Shape>();
 
             var sr = GetSelectedShapeRange();
             if (sr == null) return;
@@ -585,6 +585,37 @@ namespace BenryPPT
             progress.exitForm();
 
             this.button_kill_font_issue.Enabled = true;
+        }
+
+        private void button_swap_objects_Click(object sender, RibbonControlEventArgs e)
+        {
+            var sr = GetSelectedShapeRange();
+            if (sr == null) return;
+
+            if (sr.Count == 2)
+            {
+                var ss = new List<PowerPoint.Shape>();
+                foreach (PowerPoint.Shape s in sr) ss.Add(s);
+                // save locations
+                float center_x0 = ss[0].Left + (ss[0].Width / 2);
+                float center_y0 = ss[0].Top+ (ss[0].Height/ 2);
+                float height_0 = ss[0].Height;
+                float width_0 = ss[0].Width;
+
+                float center_x1 = ss[1].Left + (ss[1].Width / 2);
+                float center_y1 = ss[1].Top+ (ss[1].Height/ 2);
+                float height_1 = ss[1].Height;
+                float width_1 = ss[1].Width;
+
+                // apply swap
+                ss[0].Left = center_x1 - (width_0 / 2); 
+                ss[0].Top = center_y1 - (height_0 / 2); 
+
+                ss[1].Left = center_x0 - (width_1 / 2); 
+                ss[1].Top = center_y0 - (height_1 / 2); 
+            }
+
+
         }
     }
 }

@@ -55,23 +55,23 @@
             this.group_locate = this.Factory.CreateRibbonGroup();
             this.button_relocate_horizontal = this.Factory.CreateRibbonButton();
             this.button_relocate_vertical = this.Factory.CreateRibbonButton();
+            this.group_swap_objects = this.Factory.CreateRibbonGroup();
+            this.button_swap_objects = this.Factory.CreateRibbonButton();
             this.group_fontissue_killer = this.Factory.CreateRibbonGroup();
             this.button_kill_font_issue = this.Factory.CreateRibbonButton();
             this.group_info = this.Factory.CreateRibbonGroup();
             this.label_versionTitle = this.Factory.CreateRibbonLabel();
             this.label_ProductVersion = this.Factory.CreateRibbonLabel();
             this.label_assemblyFileversion = this.Factory.CreateRibbonLabel();
-            this.group_swap_objects = this.Factory.CreateRibbonGroup();
-            this.button_swap_objects = this.Factory.CreateRibbonButton();
             this.tab_Benry.SuspendLayout();
             this.group1.SuspendLayout();
             this.group_hankaku.SuspendLayout();
             this.group_multiple.SuspendLayout();
             this.group_resize.SuspendLayout();
             this.group_locate.SuspendLayout();
+            this.group_swap_objects.SuspendLayout();
             this.group_fontissue_killer.SuspendLayout();
             this.group_info.SuspendLayout();
-            this.group_swap_objects.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab_Benry
@@ -237,6 +237,21 @@
             this.button_relocate_vertical.ShowImage = true;
             this.button_relocate_vertical.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_relocate_vertical_Click);
             // 
+            // group_swap_objects
+            // 
+            this.group_swap_objects.Items.Add(this.button_swap_objects);
+            this.group_swap_objects.Label = "オブジェクト入替";
+            this.group_swap_objects.Name = "group_swap_objects";
+            // 
+            // button_swap_objects
+            // 
+            this.button_swap_objects.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.button_swap_objects.Label = "入替";
+            this.button_swap_objects.Name = "button_swap_objects";
+            this.button_swap_objects.OfficeImageId = "Recurrence";
+            this.button_swap_objects.ShowImage = true;
+            this.button_swap_objects.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_swap_objects_Click);
+            // 
             // group_fontissue_killer
             // 
             this.group_fontissue_killer.Items.Add(this.button_kill_font_issue);
@@ -275,20 +290,6 @@
             this.label_assemblyFileversion.Label = "label_assemblyFileVersion";
             this.label_assemblyFileversion.Name = "label_assemblyFileversion";
             // 
-            // group_swap_objects
-            // 
-            this.group_swap_objects.Items.Add(this.button_swap_objects);
-            this.group_swap_objects.Label = "group_swap_objects";
-            this.group_swap_objects.Name = "group_swap_objects";
-            // 
-            // button_swap_objects
-            // 
-            this.button_swap_objects.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_swap_objects.Label = "入れ替え";
-            this.button_swap_objects.Name = "button_swap_objects";
-            this.button_swap_objects.OfficeImageId = "HappyFace";
-            this.button_swap_objects.ShowImage = true;
-            // 
             // Ribbon
             // 
             this.Name = "Ribbon";
@@ -307,12 +308,12 @@
             this.group_resize.PerformLayout();
             this.group_locate.ResumeLayout(false);
             this.group_locate.PerformLayout();
+            this.group_swap_objects.ResumeLayout(false);
+            this.group_swap_objects.PerformLayout();
             this.group_fontissue_killer.ResumeLayout(false);
             this.group_fontissue_killer.PerformLayout();
             this.group_info.ResumeLayout(false);
             this.group_info.PerformLayout();
-            this.group_swap_objects.ResumeLayout(false);
-            this.group_swap_objects.PerformLayout();
             this.ResumeLayout(false);
 
         }
