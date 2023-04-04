@@ -573,7 +573,7 @@ namespace BenryPPT
 
         private void button_kill_bufont_issue_Click(object sender, RibbonControlEventArgs e)
         {
-            this.button_kill_bufont_issue.Enabled = false;
+            this.button_kill_font_issue.Enabled = false;
             // show progress bar and convert
             var progress = new FormProgress();
 
@@ -584,7 +584,7 @@ namespace BenryPPT
 
             progress.exitForm();
 
-            this.button_kill_bufont_issue.Enabled = true;
+            this.button_kill_font_issue.Enabled = true;
         }
     }
 }
